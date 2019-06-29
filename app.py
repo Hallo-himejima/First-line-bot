@@ -10,10 +10,15 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 
-app = Flask(__name__)
+import os
+from os.path import join,dirname
+from dotenv import load_dotenv
 
-line_bot_api = LineBotApi('zhjeJ9N9AGrDDiVZrb/FK7IPT/1syvYfZaVhQU/J3u05MHB4R99JLnx2kXmbMvi+zR2NV8QPneO1stHHCbequGCy8FQmS7Fuqksv9hkLFLd8TdbNLFja2bCsqfSWT2WFcJbXWwxFMp2WZKQwCYCLRAdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('a733faeda8ec55a29de763ef13eeb444')
+app = Flask(__name__)
+load_dotenv(join(dirname(__file__),'.env'))
+
+line_bot_api = LineBotApi(os.environ.get('linebot_token'))
+handler = WebhookHandler(os.environ.get('linebot_secret'))
 
 
 @app.route("/callback", methods=['POST'])
